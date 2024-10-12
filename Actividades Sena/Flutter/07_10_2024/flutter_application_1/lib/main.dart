@@ -11,9 +11,13 @@ class Miapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // Esto quita el banner de "debug"
       title: 'sena',
       home: Scaffold(
-          appBar: AppBar(title: const Text('Mi Aplicacion')),
+          appBar: AppBar(
+            title: const Text('Mi Aplicacion'),
+            centerTitle: true, // Centra el titulo
+          ),
           body: const Homepage()),
     );
   }
