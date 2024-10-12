@@ -1,3 +1,3 @@
-# Ejercicios introductorios de Dart
+# Conceptos introductorios de Dart
 
-Estos ejercicios los expliqué en mi curso de Flutter que pueden encontrar [en DevTalles.com](https://cursos.devtalles.com/)
+### Estos conceptos estan hechos principalmente para la necesidad de volver a recordar los conceptos basicos de Dart, para la realizacion de proyectos personales y profesionales.
