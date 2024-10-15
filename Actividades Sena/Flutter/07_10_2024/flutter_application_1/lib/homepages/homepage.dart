@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/respuesta.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({
-    super.key,
-  });
+  final User users;
+  const Homepage(this.users, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,33 +15,33 @@ class Homepage extends StatelessWidget {
             'USER',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text('1'),
-          Text('Leanne Graham'),
-          Text('Bret'),
-          Text('Sincere@april.biz'),
+          Text('Id: ${users.id}'),
+          Text('Name: ${users.name}'),
+          Text('Username: ${users.username}'),
+          Text('Email: ${users.email}'),
           const Text(
             'ADDRESS',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text('Kulas Light'),
-          Text('Apt. 556'),
-          Text('Gwenborough'),
-          Text('92998-3874'),
+          Text('Street: ${users.address!.street}'),
+          Text('Suite: ${users.address!.suite}'),
+          Text('City: ${users.address!.city}'),
+          Text('Zipcode: ${users.address!.zipcode}'),
           const Text(
             'GEO',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text('-37.3159'),
-          Text('81.1496'),
-          Text('1-770-736-8031 x56442'),
-          Text('hildegard.org'),
+          Text('Lat: ${users.address!.geo!.lat}'),
+          Text('Lng: ${users.address!.geo!.lng}'),
+          Text('Phone: ${users.phone}'),
+          Text('Website: ${users.website}'),
           const Text(
             'COMPANY',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text('Romaguera-Crona'),
-          Text('Multi-layered client-server neural-net'),
-          Text('harness real-time e-markets'),
+          Text('Name: ${users.company!.name}'),
+          Text('CatchPhrase: ${users.company!.catchPhrase}'),
+          Text('Bs: ${users.company!.bs}'),
           Row(
             children: [
               const Expanded(
