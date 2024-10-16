@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/respuesta.dart';
+
 import 'homepages/homepage.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const Miapp());
@@ -42,10 +41,4 @@ class Miapp extends StatelessWidget {
           )),
     );
   }
-}
-
-Future<User> getUsuarios() async {
-  var url = Uri.https('jsonplaceholder.typicode.com', '/users/1');
-  var response = await http.get(url);
-  return User(response.body);
 }
