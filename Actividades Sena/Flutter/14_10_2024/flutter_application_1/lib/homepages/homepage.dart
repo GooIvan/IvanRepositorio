@@ -3,11 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/models/respuesta.dart';
 
+// Esta es la clase principal de la aplicacion la cual tiene todos los widgets
+
 // ignore: must_be_immutable
 class Homepage extends StatelessWidget {
   final User users;
   Homepage(this.users, {super.key});
 
+  /* Se crea un controlador para el campo de texto y una 
+  variable para almacenar el valor del campo de texto */
   final controllerNumberId = TextEditingController();
   int numberId = 0;
 
@@ -91,4 +95,30 @@ Future<User> getUsuarios({int? numberId}) async {
   var url = Uri.https('jsonplaceholder.typicode.com', '/users/$numberId');
   var response = await http.get(url);
   return User(response.body);
+}
+
+// Esta clase se encarga de hacer la peticion y mandarlos a la clase Homepage llamandola
+class DataFutureBuilder extends StatelessWidget {
+  const DataFutureBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: FutureBuilder(
+        future: getUsuarios(), // El Future que estás esperando
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          // snapshot contiene el estado del Future (data, error, etc.)
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // Muestra un loader mientras espera los datos
+          } else if (snapshot.hasError) {
+            return const Text('Error 404');
+          } else if (snapshot.hasData) {
+            return Homepage(snapshot.data!);
+          } else {
+            return const Text('No data available');
+          }
+        },
+      ),
+    );
+  }
 }
