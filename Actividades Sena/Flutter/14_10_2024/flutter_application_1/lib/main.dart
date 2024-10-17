@@ -16,7 +16,7 @@ class Miapp extends StatelessWidget {
             title: const Text('Mi Aplicacion'),
             centerTitle: true, // Centra el titulo
           ),
-          body: const DataFutureBuilder(),
+          body: const Homepage(),
           // Llamamos a la clase DataFutureBuilder que se encarga de hacer la peticion
         ));
   }

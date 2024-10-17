@@ -1,124 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/models/respuesta.dart';
+import '../models/respuesta.dart';
 
-// Esta es la clase principal de la aplicacion la cual tiene todos los widgets
+/* pasé Homepage de StatelessWidget a StatefulWidget para poder usar mas funciones
+  una de ellas el initState que se ejecuta al inicio de la creación del widget, 
+  y el setState que se encarga de actualizar el estado del widget */
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
 
-// ignore: must_be_immutable
-class Homepage extends StatelessWidget {
-  final User users;
-  Homepage(this.users, {super.key});
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
 
-  /* Se crea un controlador para el campo de texto y una 
-  variable para almacenar el valor del campo de texto */
+/* Al ser un StatefulWidget, se crea una clase principal que extiende de State<Homepage> 
+  y ahí es donde se colocan todos los widgets  */
+class _HomepageState extends State<Homepage> {
   final controllerNumberId = TextEditingController();
-  int numberId = 0;
+  Future<User>? futureUser;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        // Esto es para que los elementos se distribuyan de manera uniforme
+        // Alinea los widgets segun el espacio disponible
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text(
-            'USER',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          FutureBuilder<User>(
+            future: futureUser,
+            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const Text('Error: Usuario no encontrado');
+              } else if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    const Text(
+                      'USER',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text('Id: ${snapshot.data!.id}'),
+                    Text('Name: ${snapshot.data!.name}'),
+                    Text('Username: ${snapshot.data!.username}'),
+                    Text('Email: ${snapshot.data!.email}'),
+                    const Text(
+                      'ADDRESS',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text('Street: ${snapshot.data!.address!.street}'),
+                    Text('Suite: ${snapshot.data!.address!.suite}'),
+                    Text('City: ${snapshot.data!.address!.city}'),
+                    Text('Zipcode: ${snapshot.data!.address!.zipcode}'),
+                    const Text(
+                      'GEO',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text('Lat: ${snapshot.data!.address!.geo!.lat}'),
+                    Text('Lng: ${snapshot.data!.address!.geo!.lng}'),
+                    Text('Phone: ${snapshot.data!.phone}'),
+                    Text('Website: ${snapshot.data!.website}'),
+                    const Text(
+                      'COMPANY',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text('Name: ${snapshot.data!.company!.name}'),
+                    Text('CatchPhrase: ${snapshot.data!.company!.catchPhrase}'),
+                    Text('Bs: ${snapshot.data!.company!.bs}'),
+                  ],
+                );
+              } else {
+                return const Text(
+                    'No hay datos disponibles, Por favor ingrese un ID');
+              }
+            },
           ),
-          Text('Id: ${users.id}'),
-          Text('Name: ${users.name}'),
-          Text('Username: ${users.username}'),
-          Text('Email: ${users.email}'),
-          const Text(
-            'ADDRESS',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text('Street: ${users.address!.street}'),
-          Text('Suite: ${users.address!.suite}'),
-          Text('City: ${users.address!.city}'),
-          Text('Zipcode: ${users.address!.zipcode}'),
-          const Text(
-            'GEO',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text('Lat: ${users.address!.geo!.lat}'),
-          Text('Lng: ${users.address!.geo!.lng}'),
-          Text('Phone: ${users.phone}'),
-          Text('Website: ${users.website}'),
-          const Text(
-            'COMPANY',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text('Name: ${users.company!.name}'),
-          Text('CatchPhrase: ${users.company!.catchPhrase}'),
-          Text('Bs: ${users.company!.bs}'),
           Row(
             children: [
               Expanded(
-                  child: TextField(
-                // Solo te permite ingresar numeros al campo
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: controllerNumberId,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Id a buscar',
+                child: TextField(
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: controllerNumberId,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Id a buscar',
+                  ),
                 ),
-              )),
-              const SizedBox(
-                width: 10,
               ),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
-                  /* al presionar el boton lo almacenado en el campo de texto se convierte en un entero
-                  y se almacena en la variable numberId */
-                  numberId = int.parse(controllerNumberId.text);
-                  // se llama a la funcion getUsuarios y se le pasa el parametro numberId
-                  getUsuarios(numberId: numberId);
+                  String id = controllerNumberId
+                      .text; //se crea una variable id para almacenar el valor del TextField
+                  if (id.isNotEmpty) {
+                    int numberId = int.parse(id);
+                    setState(() {
+                      futureUser = getUsuarios(
+                          numberId); // Actualiza el Future con el nuevo ID
+                    });
+                  }
                 },
                 child: const Text('Buscar'),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-/* al crear la funcion getUsuarios se le pasa un parametro opcional numberId
-el cual va a ser utilizado para la url */
-Future<User> getUsuarios({int? numberId}) async {
-  if (numberId == null || numberId == 0) {
-    numberId = 1;
-  }
+// a la funcion se le paas un parametro numberId que es el id del usuario a buscar
+Future<User> getUsuarios(int numberId) async {
   var url = Uri.https('jsonplaceholder.typicode.com', '/users/$numberId');
   var response = await http.get(url);
+
   return User(response.body);
-}
-
-// Esta clase se encarga de hacer la peticion y mandarlos a la clase Homepage llamandola
-class DataFutureBuilder extends StatelessWidget {
-  const DataFutureBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: getUsuarios(), // El Future que estás esperando
-        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-          // snapshot contiene el estado del Future (data, error, etc.)
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Muestra un loader mientras espera los datos
-          } else if (snapshot.hasError) {
-            return const Text('Error 404');
-          } else if (snapshot.hasData) {
-            return Homepage(snapshot.data!);
-          } else {
-            return const Text('No data available');
-          }
-        },
-      ),
-    );
-  }
 }
