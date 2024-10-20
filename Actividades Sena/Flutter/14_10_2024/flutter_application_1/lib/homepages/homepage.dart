@@ -21,96 +21,102 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        // Alinea los widgets segun el espacio disponible
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          FutureBuilder<User>(
-            future: futureUser,
-            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const Text('Error: Usuario no encontrado');
-              } else if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    const Text(
-                      'USER',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Id: ${snapshot.data!.id}'),
-                    Text('Name: ${snapshot.data!.name}'),
-                    Text('Username: ${snapshot.data!.username}'),
-                    Text('Email: ${snapshot.data!.email}'),
-                    const Text(
-                      'ADDRESS',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Street: ${snapshot.data!.address!.street}'),
-                    Text('Suite: ${snapshot.data!.address!.suite}'),
-                    Text('City: ${snapshot.data!.address!.city}'),
-                    Text('Zipcode: ${snapshot.data!.address!.zipcode}'),
-                    const Text(
-                      'GEO',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Lat: ${snapshot.data!.address!.geo!.lat}'),
-                    Text('Lng: ${snapshot.data!.address!.geo!.lng}'),
-                    Text('Phone: ${snapshot.data!.phone}'),
-                    Text('Website: ${snapshot.data!.website}'),
-                    const Text(
-                      'COMPANY',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Name: ${snapshot.data!.company!.name}'),
-                    Text('CatchPhrase: ${snapshot.data!.company!.catchPhrase}'),
-                    Text('Bs: ${snapshot.data!.company!.bs}'),
-                  ],
-                );
-              } else {
-                return const Text(
-                    'No hay datos disponibles, Por favor ingrese un ID');
-              }
-            },
-          ),
-          Row(
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Mi Aplicacion'),
+          centerTitle: true, // Centra el titulo
+        ),
+        body: Center(
+          child: Column(
+            // Alinea los widgets segun el espacio disponible
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                child: TextField(
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  controller: controllerNumberId,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Id a buscar',
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  String id = controllerNumberId
-                      .text; //se crea una variable id para almacenar el valor del TextField
-                  if (id.isNotEmpty) {
-                    int numberId = int.parse(id);
-                    setState(() {
-                      futureUser = getUsuarios(
-                          numberId); // Actualiza el Future con el nuevo ID
-                    });
+              FutureBuilder<User>(
+                future: futureUser,
+                builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return const Text('Error: Usuario no encontrado');
+                  } else if (snapshot.hasData) {
+                    return Column(
+                      children: [
+                        const Text(
+                          'USER',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text('Id: ${snapshot.data!.id}'),
+                        Text('Name: ${snapshot.data!.name}'),
+                        Text('Username: ${snapshot.data!.username}'),
+                        Text('Email: ${snapshot.data!.email}'),
+                        const Text(
+                          'ADDRESS',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text('Street: ${snapshot.data!.address!.street}'),
+                        Text('Suite: ${snapshot.data!.address!.suite}'),
+                        Text('City: ${snapshot.data!.address!.city}'),
+                        Text('Zipcode: ${snapshot.data!.address!.zipcode}'),
+                        const Text(
+                          'GEO',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text('Lat: ${snapshot.data!.address!.geo!.lat}'),
+                        Text('Lng: ${snapshot.data!.address!.geo!.lng}'),
+                        Text('Phone: ${snapshot.data!.phone}'),
+                        Text('Website: ${snapshot.data!.website}'),
+                        const Text(
+                          'COMPANY',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text('Name: ${snapshot.data!.company!.name}'),
+                        Text(
+                            'CatchPhrase: ${snapshot.data!.company!.catchPhrase}'),
+                        Text('Bs: ${snapshot.data!.company!.bs}'),
+                      ],
+                    );
+                  } else {
+                    return const Text(
+                        'No hay datos disponibles, Por favor ingrese un ID');
                   }
                 },
-                child: const Text('Buscar'),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      controller: controllerNumberId,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Id a buscar',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      String id = controllerNumberId
+                          .text; //se crea una variable id para almacenar el valor del TextField
+                      if (id.isNotEmpty) {
+                        int numberId = int.parse(id);
+                        setState(() {
+                          futureUser = getUsuarios(
+                              numberId); // Actualiza el Future con el nuevo ID
+                        });
+                      }
+                    },
+                    child: const Text('Buscar'),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
 
