@@ -23,6 +23,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          // Barra superior
           title: const Text('Mi Aplicacion'),
           centerTitle: true, // Centra el titulo
         ),
