@@ -11,7 +11,7 @@ void main() async {
   var url = Uri.https('jsonplaceholder.typicode.com', '/users/$numId');
   var response = await http.get(url);
 
-  if(response.statusCode != 200){
+  if (response.statusCode != 200) {
     print('Error ${response.statusCode}, Id no encontrada');
     exit(0);
   }
@@ -21,7 +21,7 @@ void main() async {
   print(user.company);
 }
 
-class User{
+class User {
   int? id;
   String? name;
   String? username;
@@ -30,9 +30,8 @@ class User{
   String? website;
   Address? address;
   Company? company;
-  
 
-  User(response){
+  User(response) {
     Map<String, dynamic> map = jsonDecode(response);
     id = map['id'];
     name = map['name'];
@@ -43,17 +42,17 @@ class User{
 
     company = Company(map['company']);
     address = Address(map['address']);
-  } 
+  }
 }
 
-class Address{
+class Address {
   String? street;
   String? suite;
   String? city;
   String? zipcode;
   Geo? geo;
 
-  Address(Map map){
+  Address(Map map) {
     street = map['street'];
     suite = map['suite'];
     city = map['city'];
@@ -72,11 +71,11 @@ class Address{
   }
 }
 
-class Geo{
+class Geo {
   String? lat;
   String? lng;
 
-  Geo(Map geo){
+  Geo(Map geo) {
     lat = geo['lat'];
     lng = geo['lng'];
   }
@@ -90,12 +89,12 @@ class Geo{
   }
 }
 
-class Company{
+class Company {
   String? name;
   String? catchPhrase;
   String? bs;
 
-  Company(Map company){
+  Company(Map company) {
     name = company['name'];
     catchPhrase = company['catchPhrase'];
     bs = company['bs'];
