@@ -1,0 +1,3 @@
+# 19 de Junio 2024
+### el dia de hoy con el instructor Henry, nos explicó algunos comandos en el lenguaje de programación de VIsual Basic, por ende nos dejo como compromiso realizar un algoritmo, programa funcional, para realizarlo como ejercicio el día viernes.
+### Hacer un algoritmo y software que al momento de ingresar los nombres, cuidad/municipio y placa de un vehiculo, les generará en la celda siguiente un codigo creado con los 3 primeros caracteres de la cuidad/municipio, ultimos 2 caracteres del nombre y los 3 numeros que contenga la placa. ejemplo: Ivan Soledad JHG203, codigo: Solan203. 

@@ -1,0 +1,9 @@
+Inicio
+    leer "¿Cuantos estudiantes son?", numEst
+    para i = 1 hasta numEst
+        leer "¿Cual es tu nombre", nombreEst
+        a = len(nombreEst) 
+        b = substr(nombreEst, a-1, 2)
+        esc "Tus ultimos 2 caracteres son" + b
+    fin para
+Fin

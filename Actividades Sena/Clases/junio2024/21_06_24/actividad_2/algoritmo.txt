@@ -1,0 +1,11 @@
+Inicio
+    name = cells(1, 1)
+    a = cells(1, 1)
+    para i = 1 hasta 10
+        cells(1, i) = name
+        for j = 1 hasta 10000000
+        Fin para
+        cells(1, i) = empty
+    Fin para
+    cells (1, i) = a
+Fin

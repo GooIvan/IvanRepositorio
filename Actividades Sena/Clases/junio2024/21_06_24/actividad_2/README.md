@@ -1,0 +1,3 @@
+# 21 de Junio 2024
+### el dia de hoy con el instructor Henry, nos explicó algunos comandos en el lenguaje de programación de VIsual Basic, por ende nos dejo como compromiso realizar un algoritmo, programa funcional, para realizarlo como ejercicio el día lunes.
+### Hacer un algoritmo y software que al momento de ingresar los nombres en una casilla, el nombre tendra un efecto de movimiento, iniciará en una casilla y se moverá como tablero de transMilenio, iniciará en un punto y terminará en otro.

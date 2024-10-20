@@ -1,0 +1,1 @@
+## Este dia, 27 de mayo 2024, desarrollamos una actividad la cual nos notaba realizar un diagrama de flujo de fomra escrita, un aplicativo donde usando los 'imputs' y el 'if y else' para un sistema de renta anual.

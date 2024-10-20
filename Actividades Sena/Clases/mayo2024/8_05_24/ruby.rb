@@ -1,0 +1,11 @@
+
+puts "Hola" 
+puts "mi nombre es:"
+puts "Iván Madera"
+puts "tengo:"
+puts "16 años"
+puts "nací en"
+puts "Soledad"
+puts "y me gusta"
+puts "mucho el futbol y"
+puts "estudio en el SENA"

@@ -1,0 +1,12 @@
+Inicio
+    para c = 1 hasta 5
+        para i = 1 hasta c
+            name = cells(c, 1)
+                numName = len(name)
+                para j = 1 hasta numName
+                    letras = mid(name, j, 1)
+                    cells(c, j + 1) = letras
+                Fin para
+        Fin para
+    Fin para
+fin

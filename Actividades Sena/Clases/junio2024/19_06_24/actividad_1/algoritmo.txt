@@ -1,0 +1,21 @@
+Inicio
+    leer "Cantidad de datos", cantidad
+    para i = 2 hasta cantidad
+        name = cells(i, 1)
+        numName = len(name)
+        ultimasName substr(name, numName-1, 2)
+
+        city = cells(i, 2)
+        numcity = len(city)
+        trescity = substr(city, 1, 3)
+
+        placa = cells(i, 3) 
+        numplaca = len(placa)
+        tresplaca = substr(placa, 4, 3)
+
+        acum = trescity + ultimasName + tresplaca
+
+        cells(i, 4) = acum
+        acum = ""
+    fin para
+Fin
