@@ -1,5 +1,6 @@
+import 'package:flutter_application_1/widgets/kicktextfield.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/homepages/success.dart';
 import 'models/respuesta.dart';
 import 'homepages/waiting.dart';
@@ -50,9 +51,13 @@ class _MiappState extends State<Miapp> {
       title: 'sena',
       home: Scaffold(
         appBar: AppBar(
-          // Barra superior
-          title: const Text('Mi Aplicacion'),
-          centerTitle: true, // Centra el titulo
+          title: Text(
+            'APIS JSONPLACEHOLDER',
+            style: GoogleFonts.pressStart2p(
+                fontSize: 20, color: const Color.fromARGB(255, 0, 231, 1)),
+          ),
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 25, 27, 31),
         ),
         body: FutureBuilder<User>(
           future: futureUser,
@@ -69,33 +74,40 @@ class _MiappState extends State<Miapp> {
             }
           },
         ),
-        bottomNavigationBar: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: controllerNumberId,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Id a buscar',
-                ),
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 25, 27, 31),
+          child: Row(
+            children: [
+              Expanded(
+                child: KickTextfield(controllerNumberId: controllerNumberId),
               ),
-            ),
-            const SizedBox(width: 10),
-            ElevatedButton(
-              onPressed: () {
-                //se crea una variable id para almacenar el valor del TextField
-                String id = controllerNumberId.text;
-                if (id.isNotEmpty) {
-                  numberId = int.parse(id);
-                  setState(() {
-                    futureUser = getUsuarios(numberId);
-                  });
-                }
-              },
-              child: const Text('Buscar'),
-            )
-          ],
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  //se crea una variable id para almacenar el valor del TextField
+                  String id = controllerNumberId.text;
+                  if (id.isNotEmpty) {
+                    numberId = int.parse(id);
+                    setState(() {
+                      futureUser = getUsuarios(numberId);
+                    });
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  // este shape algunos estilos al boton
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    side: const BorderSide(
+                        color: Color.fromARGB(255, 63, 65, 68), width: 0.7),
+                  ),
+                  backgroundColor: const Color.fromARGB(255, 25, 27, 31),
+                  foregroundColor: const Color.fromARGB(255, 0, 231, 1),
+                ),
+                child: const Text('Buscar'),
+              ),
+              const SizedBox(width: 10),
+            ],
+          ),
         ),
       ),
     );
